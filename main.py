@@ -1,12 +1,15 @@
 import asyncio
-from aiogram import Bot, Dispatcher
 from decouple import config
+from aiogram import Bot, Dispatcher
+from aiogram.fsm.storage.redis import RedisStorage
 from handlers import router
 
 bot = Bot(token=config("BOT_TOKEN"))
+redis_url = config('REDIS_URL')
+storage = RedisStorage.from_url(config('REDIS_URL'))
 
 async def main():
-    dp = Dispatcher()
+    dp = Dispatcher(storage=storage)
     dp.include_router(router)
     try:
         await bot.delete_webhook(drop_pending_updates=True)
