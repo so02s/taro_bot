@@ -1,4 +1,5 @@
 from aiogram import Router, F
+from aiogram.filters import CommandStart
 from aiogram.types import Message
 from aiogram.types.input_file import FSInputFile
 from cards import cards
@@ -15,8 +16,9 @@ async def echo_card(msg: Message):
         photo=photo
     )
 
-# TODO При вводе карты дать возможность задать вопрос (через FSM + redis)
-# Вопрос и заготовка отправляется на API GigaChat -> Дается ответ из нейронки + Меченная ссылка
+@router.message(CommandStart())
+async def start(msg: Message):
+    await msg.answer("Привет! Я могу раскрыть вашу судьбу\nВсе, что нужно сделать - ввести название карты, что вам выпала")
 
 @router.message()
 async def error(msg: Message):
