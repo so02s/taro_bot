@@ -1,0 +1,17 @@
+version: '3'
+
+services:
+
+    telegram_bot_docker_tmpl:
+        container_name: TaroTelegramBot
+        image: telegram_bot_docker_tmpl
+
+        build: .
+
+        environment:
+            - BOT_TOKEN=${BOT_TOKEN}
+
+        ports:
+            - "443:443"
+
+        restart: on-failure
